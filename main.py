@@ -16,17 +16,19 @@ def write_responses(result):
 
 def process_queries(queries):
     result = []
-    contacts ={}
+    contacts = {}
     for query in queries:
         if query.type == 'add':
             contacts[query.number] = query.name
         elif query.type == 'del':
             if query.number in contacts:
+                del contacts[query.number]
+        elif query.type == 'find':
+            if query.number in contacts:
                 result.append(contacts[query.number])
             else:
-                result.append('not found')    
+                result.append('not found')
     return result
 
 if __name__ == '__main__':
     write_responses(process_queries(read_queries()))
-
